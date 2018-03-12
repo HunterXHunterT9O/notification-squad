@@ -1,5 +1,4 @@
 django==1.11.2
 channels==2.0.0
 channels_redis==2.0.0
-daphne==2.0.0
-Twisted[tls,http2]
+daphne==2.1.0

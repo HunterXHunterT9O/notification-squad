@@ -5,11 +5,4 @@ import notifications.routing
 
 ASGI_APPLICATION = "notification_squad.routing.application"
 
-application = ProtocolTypeRouter({
-    # (http->django views is added by default)
-    'websocket': AuthMiddlewareStack(
-        URLRouter(
-            notifications.routing.websocket_urlpatterns
-        )
-    ),
-})
+application = ProtocolTypeRouter()
