@@ -1,1 +1,1 @@
-web: daphne -p 8001 notification_squad.asgi:application
+web: daphne notification_squad.asgi:application --port $PORT --bind 0.0.0.0 -v2
