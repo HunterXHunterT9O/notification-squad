@@ -126,11 +126,3 @@ STATIC_URL = '/static/'
 # Channels
 ASGI_APPLICATION = 'notification_squad.routing.application'
 
-CHANNEL_LAYERS = {
-    'default': {
-        'BACKEND': 'channels_redis.core.RedisChannelLayer',
-        'CONFIG': {
-            "hosts": [(os.environ.get('REDIS_URL'), 6379),],
-        },
-    },
-}
