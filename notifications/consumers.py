@@ -32,7 +32,7 @@ class NotificationConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         
         sender = User.objects.get(pk=text_data_json['userPk'])
-        notification = utils.generate_notification(text_data_json['action'])
+        notification = utils.generate_notification(sender.username, text_data_json['action'])
         
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
@@ -40,7 +40,8 @@ class NotificationConsumer(WebsocketConsumer):
             {
                 'type': 'chat_message',
                 'username': sender.username,
-                'pk': text_data_json['userPk']
+                'pk': text_data_json['userPk'],
+                'message': notification
             }
         )
 
@@ -50,5 +51,6 @@ class NotificationConsumer(WebsocketConsumer):
         # Send message to WebSocket
         self.send(text_data=json.dumps({
             'username': event['username'],
-            'pk': event['pk']
+            'pk': event['pk'],
+            'message': event['message']
         }))
