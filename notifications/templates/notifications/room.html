@@ -77,8 +77,13 @@
         
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
         
+        <input type="hidden" id="pk" value="{{ user.pk }}">
+        
         <script>
             var roomName = {{ room_name_json }};
+            
+            const pk = $('#pk').val();
+            $('#pk').remove();
 
             var chatSocket = new WebSocket(
                 'wss://' + window.location.host +
@@ -103,7 +108,9 @@
             };
             
             document.querySelector('button').onclick = function(e) {
-                chatSocket.send('{}');
+                chatSocket.send(JSON.stringify({
+                    userPk: pk
+                }));
             };
         </script>
         
