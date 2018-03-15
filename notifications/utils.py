@@ -1,18 +1,18 @@
-def generate_notification(user, action):
+def generate_notification(username, action):
     
-    message = user.username
+    message = username
     
     if action == 'CA':
-        message += 'created a new announcement'
+        message += ' created a new announcement'
     elif action == 'LA':
-        message += 'liked announcement "Announcement Title"'
+        message += ' liked announcement "Announcement Title"'
     elif action == 'DA':
-        message += 'deleted announcement "Announcement Title"'
+        message += ' deleted announcement "Announcement Title"'
     elif action == 'CC':
-        message += 'created a new comment'
+        message += ' created a new comment'
     elif action == 'LC':
-        message += 'liked your comment'
+        message += ' liked your comment'
     elif action == 'DC':
-        message += 'deleted your comment'
+        message += ' deleted your comment'
     
     return message
