@@ -36,7 +36,7 @@ class NotificationConsumer(WebsocketConsumer):
         
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
+            'notifications',
             {
                 'type': 'chat_message',
                 'username': sender.username,
