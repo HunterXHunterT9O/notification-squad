@@ -123,19 +123,56 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-import dj_database_url
-DATABASES['default'] = dj_database_url.config()
+#import dj_database_url
+#DATABASES['default'] = dj_database_url.config()
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Channels
-ASGI_APPLICATION = 'notification_squad.routing.application'
+#ASGI_APPLICATION = 'notification_squad.routing.application'
 
-CHANNEL_LAYERS = {
+'''CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
         'CONFIG': {
             "hosts": [os.environ.get('REDIS_URL', None)],
         },
     },
-}
+}'''
+
+if DEBUG:
+
+    DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
+    
+
+    
+# Used for static and media file storage in production
+else:
+    INSTALLED_APPS.append('channels')
+    
+    # Channels
+    import channels_redis
+    
+    ASGI_APPLICATION = 'notification_squad.routing.application'
+
+    CHANNEL_LAYERS = {
+        'default': {
+            'BACKEND': 'channels_redis.core.RedisChannelLayer',
+            'CONFIG': {
+                "hosts": [os.environ.get('REDIS_URL', None)],
+            },
+        },
+    }
+
+    import dj_database_url
+    DATABASES['default'] = dj_database_url.config()
+
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    ALLOWED_HOSTS = ['*']
+    
